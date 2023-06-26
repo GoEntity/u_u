@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"sort"
@@ -116,50 +117,49 @@ func main() {
 	var blogData []RepoData
 	for _, repo := range repos {
 		if !*repo.Fork {
-			repoData := RepoData{
-				Name:  *repo.Name,
-				Stars: *repo.StargazersCount,
-				Forks: *repo.ForksCount,
-				URL:   *repo.HTMLURL,
-			}
-			var prevRepo RepoData
-			for _, pr := range prevData.RepoStats {
-				if pr.Name == repoData.Name {
-					prevRepo = pr
-					break
+			var repoData RepoData
+			for i := 0; i < 10; i++ {
+				repoData = RepoData{
+					Name:  *repo.Name,
+					Stars: *repo.StargazersCount,
+					Forks: *repo.ForksCount,
+					URL:   *repo.HTMLURL,
 				}
-			}
-			repoData.StarsIncrease = repoData.Stars - prevRepo.Stars
-			repoData.ForksIncrease = repoData.Forks - prevRepo.Forks
-			if repo.Description != nil {
-				repoData.Description = *repo.Description
-			}
-			commitInfo, _, err := client.Repositories.ListContributorsStats(ctx, "GoEntity", *repo.Name)
-			if err != nil {
-				fmt.Printf("Error fetching commit counts for repository %s: %v\n", *repo.Name, err)
-				continue
-			}
-			for _, contributor := range commitInfo {
-				if *contributor.Author.Login == "GoEntity" {
-					repoData.Commits = *contributor.Total
-					repoData.CommitsIncrease = repoData.Commits - prevRepo.Commits
+				var prevRepo RepoData
+				for _, pr := range prevData.RepoStats {
+					if pr.Name == repoData.Name {
+						prevRepo = pr
+						break
+					}
 				}
+				repoData.StarsIncrease = repoData.Stars - prevRepo.Stars
+				repoData.ForksIncrease = repoData.Forks - prevRepo.Forks
+				if repo.Description != nil {
+					repoData.Description = *repo.Description
+				}
+				commitInfo, _, err := client.Repositories.ListContributorsStats(ctx, "GoEntity", *repo.Name)
+				if err == nil {
+					for _, contributor := range commitInfo {
+						if *contributor.Author.Login == "GoEntity" {
+							repoData.Commits = *contributor.Total
+							repoData.CommitsIncrease = repoData.Commits - prevRepo.Commits
+						}
+					}
+					views, err := getTrafficViews(plsdontsteal, "GoEntity", *repo.Name)
+					if err == nil {
+						repoData.Views = views
+						repoData.ViewsIncrease = repoData.Views - prevRepo.Views
+						clones, err := getTrafficClones(plsdontsteal, "GoEntity", *repo.Name)
+						if err == nil {
+							repoData.Clones = clones
+							repoData.ClonesIncrease = repoData.Clones - prevRepo.Clones
+							blogData = append(blogData, repoData)
+							break
+						}
+					}
+				}
+				time.Sleep(time.Second * 2)
 			}
-			views, err := getTrafficViews(plsdontsteal, "GoEntity", *repo.Name)
-			if err != nil {
-				fmt.Printf("Error fetching traffic views for repository %s: %v\n", *repo.Name, err)
-				continue
-			}
-			repoData.Views = views
-			repoData.ViewsIncrease = repoData.Views - prevRepo.Views
-			clones, err := getTrafficClones(plsdontsteal, "GoEntity", *repo.Name)
-			if err != nil {
-				fmt.Printf("Error fetching traffic clones for repository %s: %v\n", *repo.Name, err)
-				continue
-			}
-			repoData.Clones = clones
-			repoData.ClonesIncrease = repoData.Clones - prevRepo.Clones
-			blogData = append(blogData, repoData)
 		}
 	}
 	if len(blogData) > 0 {
@@ -170,55 +170,63 @@ func main() {
 	}
 
 	const tmpl = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoEntity</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>GoEntity Public Repositories :)</h1>
-		<h4>this only displays public repositories that I have ownership of</h4>
-		<h4>if you are not seeing certain repos, it's because git server is returning 202 error</h4>
-		<h4>which means it's still processing the data and should be available in a few minutes</h4>
-		<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
-		<h6>Please don't steal my git token :)</h6>
-    </header>
-    <main>
-		<div id="exp">
-			<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts***<h3>
-			<h5>git action to update the stats is run every hour</h5>
-		</div>
-        <div class="grid">
-            {{range .RepoData}}
-            <article>
-                <h2><a href="{{.URL}}">{{.Name}}</a></h2>
-                <p>{{.Description}}</p>
-                <p><strong>Stars:</strong> {{.Stars}} <span>(+{{.StarsIncrease}})</span></p>
-                <p><strong>Forks:</strong> {{.Forks}} <span>(+{{.ForksIncrease}})</span></p>
-                <p><strong>Commits:</strong> {{.Commits}} <span>(+{{.CommitsIncrease}})</span></p>
-                <p><strong>Views:</strong> {{.Views}} <span>(+{{.ViewsIncrease}})</span></p>
-                <p><strong>Clones:</strong> {{.Clones}} <span>(+{{.ClonesIncrease}})</span></p>
-            </article>
-            {{end}}
-        </div>
-    </main>
-</body>
-</html>
-	`
-	t, _ := template.New("webpage").Parse(tmpl)
-	pageData := PageData{
-		Date:     time.Now().Format("2006-01-02 15:04:05"),
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>GoEntity</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<header>
+			<h1>GoEntity Public Repositories :)</h1>
+			<h4>this only displays public repositories that I have ownership of</h4>
+			<h4>if you are not seeing certain repos, it's because git server is returning 202 error</h4>
+			<h4>which means it's still processing the data and should be available in a few minutes</h4>
+			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
+			<h6>Please don't steal my git token :)</h6>
+		</header>
+		<main>
+			<div id="exp">
+				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts***<h3>
+				<h5>git action to update the stats is run every hour</h5>
+			</div>
+			<div class="grid">
+				{{range .RepoData}}
+				<article>
+					<h2><a href="{{.URL}}">{{.Name}}</a></h2>
+					<p>{{.Description}}</p>
+					<p><strong>Stars:</strong> {{.Stars}} <span>(+{{.StarsIncrease}})</span></p>
+					<p><strong>Forks:</strong> {{.Forks}} <span>(+{{.ForksIncrease}})</span></p>
+					<p><strong>Commits:</strong> {{.Commits}} <span>(+{{.CommitsIncrease}})</span></p>
+					<p><strong>Views:</strong> {{.Views}} <span>(+{{.ViewsIncrease}})</span></p>
+					<p><strong>Clones:</strong> {{.Clones}} <span>(+{{.ClonesIncrease}})</span></p>
+				</article>
+				{{end}}
+			</div>
+		</main>
+	</body>
+	</html>`
+	tmplParsed, err := template.New("webpage").Parse(tmpl)
+	if err != nil {
+		log.Fatalf("Error parsing template: %v\n", err)
+	}
+	f, err := os.Create("index.html")
+	if err != nil {
+		log.Fatalf("Error creating index.html: %v\n", err)
+	}
+	data := &PageData{
+		Date:     time.Now().Format("02-01-2006"),
 		RepoData: blogData,
 	}
-	f, _ := os.Create("index.html")
-	err = t.Execute(f, pageData)
+	err = tmplParsed.Execute(f, data)
 	if err != nil {
-		fmt.Printf("Error executing template: %v\n", err)
-		return
+		log.Fatalf("Error executing template: %v\n", err)
 	}
-	f.Close()
+	err = f.Close()
+	if err != nil {
+		log.Fatalf("Error closing index.html: %v\n", err)
+	}
+
 }
