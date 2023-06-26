@@ -21,7 +21,6 @@ header {
     padding-top: 15px;
     padding-bottom: 1px;
     line-height: 2vh;
-
     /* flex: 0 0 calc(33.333% - 20px); */
 }
 
@@ -39,6 +38,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 20px;
 }
 
 article {
@@ -68,8 +68,8 @@ span {
 }
 
 h4, h5{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 a{
@@ -82,10 +82,6 @@ a{
     font-size: larger;
 }
 
-#exp h3{
-    text-align: center;
-}
-
-#exp h5{
+#exp h3, h4, h5{
     text-align: center;
 }
