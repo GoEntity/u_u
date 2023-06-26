@@ -168,6 +168,7 @@ func main() {
 	} else {
 		fmt.Println("No valid data fetched, not updating previous.json")
 	}
+	
 	const tmpl = `
 <!DOCTYPE html>
 <html lang="en">
