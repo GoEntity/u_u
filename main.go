@@ -189,7 +189,7 @@ func main() {
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts***<h3>
+				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts ***<h3>
 				<h5>git action to update the stats is run every hour</h5>
 			</div>
 			<div class="grid">
@@ -208,6 +208,7 @@ func main() {
 		</main>
 	</body>
 	</html>`
+
 	tmplParsed, err := template.New("webpage").Parse(tmpl)
 	if err != nil {
 		log.Fatalf("Error parsing template: %v\n", err)
