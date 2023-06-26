@@ -188,7 +188,7 @@ func main() {
     </header>
     <main>
 		<div id="exp">
-			<h3>*** shows public repo stats in the past 14 days ***<h3>
+			<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts***<h3>
 		</div>
         <div class="grid">
             {{range .RepoData}}

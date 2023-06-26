@@ -73,3 +73,12 @@ a{
     color: red;
     text-decoration: none;
 }
+
+#exp em{
+    color: red;
+    font-size: larger;
+}
+
+#exp h3{
+    text-align: center;
+}
