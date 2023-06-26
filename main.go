@@ -168,7 +168,7 @@ func main() {
 	} else {
 		fmt.Println("No valid data fetched, not updating previous.json")
 	}
-	
+
 	const tmpl = `
 <!DOCTYPE html>
 <html lang="en">
@@ -190,6 +190,7 @@ func main() {
     <main>
 		<div id="exp">
 			<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts***<h3>
+			<h5>git action to update the stats is run every hour</h5>
 		</div>
         <div class="grid">
             {{range .RepoData}}
