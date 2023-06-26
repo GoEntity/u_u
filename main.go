@@ -198,6 +198,7 @@ func main() {
 				<h3>*** shows public repo stats in the past <em>14</em> days with +/- counts in the past <em>12</em> hours ***<h3>
 				<h5>git action to update the stats is currently set up to run only twice per day</h5>
 				<h5>but sometimes I might run it manually if I'm bored</h5>
+				<h5>also, whenever I deploy manually, +/- counts <h3>WILL RESET SO STOP IT JUST GO TO BED IT'S 4:32 AM ATM WHAT R U DOING</h3></h5>
 			</div>
 			<div class="grid">
 				{{range .RepoData}}
