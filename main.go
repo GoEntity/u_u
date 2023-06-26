@@ -178,12 +178,11 @@ func main() {
 <body>
     <header>
         <h1>GoEntity Public Repositories :)</h1>
-		<h3>this only displays public repositories that I have ownership of</h3>
-		<h3>if you are not seeing certain repos, it's because git server is returning 202 error</h3>
-		<h3>which means it's still processing the data and should be available in a few minutes</h3>
-		<h2>Updated on {{.Date}}</h2>
-		<h2>Uploaded by <a href="https://github.com/GoEntity/GoEntity_Github">This Repo</a></h2>
-		<h3>Please don't steal my git token :)</h3>
+		<h4>this only displays public repositories that I have ownership of</h4>
+		<h4>if you are not seeing certain repos, it's because git server is returning 202 error</h4>
+		<h4>which means it's still processing the data and should be available in a few minutes</h4>
+		<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
+		<h6>Please don't steal my git token :)</h6>
     </header>
     <main>
         <div class="grid">
