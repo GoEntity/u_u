@@ -16,16 +16,19 @@ body {
 header {
     /* padding: 20px; */
     /* background-color: rgb(226, 27, 120, 0.75); */
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     text-align: center;
     padding-top: 15px;
     padding-bottom: 1px;
     line-height: 2vh;
+
+    /* flex: 0 0 calc(33.333% - 20px); */
 }
 
 h1 {
     margin-bottom: 15px;
     font-size: 24px;
+    color: blueviolet;
 }
 
 main {
