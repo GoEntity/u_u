@@ -1,0 +1,51 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    /* padding: 20px; */
+    background-color: hotpink;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+main {
+    padding: 20px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+article {
+    flex: 0 0 calc(33.333% - 20px);
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: ultraviolet;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+span {
+    color: lime;
+}
