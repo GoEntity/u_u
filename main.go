@@ -186,9 +186,10 @@ func main() {
 	<body>
 		<header>
 			<h1>GoEntity Public Repositories :)</h1>
-			<h4>this only displays public repositories that I have ownership of</h4>
-			<h4>if you are not seeing certain repos, it's because git server is returning 202 error</h4>
-			<h4>which means it's still processing the data and should be available in a few minutes</h4>
+			<br>
+			<h4>* this only displays public repositories that I have ownership of *</h4>
+			<h4>* if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
+			<br>
 			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
 			<h6>Please don't steal my git token :)</h6>
 		</header>
