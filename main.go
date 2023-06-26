@@ -87,12 +87,17 @@ func getTrafficClones(token, owner, repo string) (int, error) {
 }
 
 func main() {
-	tokenBytes, err := os.ReadFile("E:/Git/Secret_Token.txt")
-	if err != nil {
-		fmt.Printf("Error reading token file!!: %v\n", err)
-		return
+	plsdontsteal := os.Getenv("GoEntity_Github")
+	if plsdontsteal == "" {
+		fmt.Println("token GoEntity_Github not set... attempting to read from local folder")
+		tokenBytes, err := os.ReadFile("E:/Git/Secret_Token.txt")
+		if err != nil {
+			fmt.Printf("Error reading local token file!: %v\n", err)
+			return
+		}
+		plsdontsteal = strings.TrimSpace(string(tokenBytes))
 	}
-	plsdontsteal := strings.TrimSpace(string(tokenBytes))
+
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: plsdontsteal},
