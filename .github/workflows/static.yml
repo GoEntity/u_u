@@ -2,7 +2,7 @@ name: goentity github
 
 on:
   schedule:
-    - cron: '0 0,12 * * *' #12 pm 12 am
+    - cron: '0 0,12 * * *' #12 pm 12 am UTC
   workflow_dispatch:     #allow to run this workflow manually from git action
 
 #git token deploy permit to git page
