@@ -19,6 +19,7 @@ import (
 type RepoData struct {
 	Name            string
 	Description     string
+	URL             string
 	Stars           int
 	StarsIncrease   int
 	Forks           int
@@ -119,6 +120,7 @@ func main() {
 				Name:  *repo.Name,
 				Stars: *repo.StargazersCount,
 				Forks: *repo.ForksCount,
+				URL:   *repo.HTMLURL,
 			}
 			var prevRepo RepoData
 			for _, pr := range prevData.RepoStats {
@@ -185,10 +187,13 @@ func main() {
 		<h6>Please don't steal my git token :)</h6>
     </header>
     <main>
+		<div id="exp">
+			<h3>*** shows public repo stats in the past 14 days ***<h3>
+		</div>
         <div class="grid">
             {{range .RepoData}}
             <article>
-                <h2>{{.Name}}</h2>
+                <h2><a href="{{.URL}}">{{.Name}}</a></h2>
                 <p>{{.Description}}</p>
                 <p><strong>Stars:</strong> {{.Stars}} <span>(+{{.StarsIncrease}})</span></p>
                 <p><strong>Forks:</strong> {{.Forks}} <span>(+{{.ForksIncrease}})</span></p>
