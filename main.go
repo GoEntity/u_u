@@ -185,13 +185,13 @@ func main() {
 	</head>
 	<body>
 		<header>
-			<h1>GoEntity Public Repositories :)</h1>
+			<h1>GoEntity Public Repositories :&#41;</h1>
 			<br>
 			<h4>&gt;&gt; this only displays public repositories that I have ownership of</h4>
 			<h4>&gt;&gt; if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
 			<br>
 			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
-			<h6>Please don't steal my git token :)</h6>
+			<h6>Please don't steal my git token :&#41;</h6>
 		</header>
 		<main>
 			<div id="exp">
