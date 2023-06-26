@@ -187,15 +187,15 @@ func main() {
 		<header>
 			<h1>GoEntity Public Repositories :)</h1>
 			<br>
-			<h4>* this only displays public repositories that I have ownership of *</h4>
-			<h4>* if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
+			<h4>&gt;&gt; this only displays public repositories that I have ownership of</h4>
+			<h4>&gt;&gt; if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
 			<br>
 			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
 			<h6>Please don't steal my git token :)</h6>
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts ***<h3>
+				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts updates ***<h3>
 				<h5>git action to update the stats is run every hour</h5>
 			</div>
 			<div class="grid">
