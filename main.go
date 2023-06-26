@@ -123,7 +123,7 @@ func main() {
 	for _, repo := range repos {
 		if !*repo.Fork {
 			var repoData RepoData
-			for i := 0; i < 10; i++ {
+			for i := 0; i < 15; i++ {
 				repoData = RepoData{
 					Name:  *repo.Name,
 					Stars: *repo.StargazersCount,
@@ -196,7 +196,8 @@ func main() {
 		<main>
 			<div id="exp">
 				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts updates ***<h3>
-				<h5>git action to update the stats is run every hour</h5>
+				<h5>git action to update the stats is currently set up to run only twice per day</h5>
+				<h5>but sometimes I might run it manually if I'm bored</h5>
 			</div>
 			<div class="grid">
 				{{range .RepoData}}
