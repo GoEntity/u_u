@@ -195,7 +195,7 @@ func main() {
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with hourly +/- counts updates ***<h3>
+				<h3>*** shows public repo stats in the past <em>14</em> days with +/- counts in the past 12 hours ***<h3>
 				<h5>git action to update the stats is currently set up to run only twice per day</h5>
 				<h5>but sometimes I might run it manually if I'm bored</h5>
 			</div>
