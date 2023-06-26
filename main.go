@@ -223,7 +223,7 @@ func main() {
 		log.Fatalf("Error creating index.html: %v\n", err)
 	}
 	data := &PageData{
-		Date:     time.Now().Format("02-01-2006"),
+		Date:     time.Now().Format("01-02-2006"),
 		RepoData: blogData,
 	}
 	err = tmplParsed.Execute(f, data)
