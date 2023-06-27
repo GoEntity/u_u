@@ -18,16 +18,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update:
+  update_and_deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # fetch all history for all branches and tags
-
-      - name: pull
-        run: git pull
 
       - name: setup go
         uses: actions/setup-go@v4
@@ -50,18 +50,6 @@ jobs:
           timestamp=$(date -u)
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push
-
-  deploy:
-    needs: update
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: setup page
         uses: actions/configure-pages@v3
