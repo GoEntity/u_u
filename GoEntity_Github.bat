@@ -1,4 +1,8 @@
 @echo off
-cd /d E:\Git\GoEntity_Github
-set /p GoEntity_Github=<E:\Git\Secret_Token.txt
-go run main.go
+cd E:\Git\GoEntity_Github
+
+"C:\Go\bin\go.exe" run main.go
+
+"C:\Git\bin\git.exe" add .
+"C:\Git\bin\git.exe" commit -m "auto update"
+"C:\Git\bin\git.exe" push origin main

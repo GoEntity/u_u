@@ -191,12 +191,11 @@ func main() {
 			<h4>&gt;&gt; if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
 			<br>
 			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
-			<h6>Please don't steal my git token :&#41;</h6>
+			<h5 style="color:red";>Please don't steal my git token :&#41;</h5>
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with +/- counts in the past <em>12</em> hours ***<h3>
-				<h5>git action to update the stats is currently set up to run only twice per day</h5>
+				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in between my login and logout<h3>
 				<h5>but sometimes I might run it manually if I'm bored</h5>
 			</div>
 			<div class="grid">
