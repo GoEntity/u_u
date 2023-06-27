@@ -195,7 +195,7 @@ func main() {
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in between my login and logout<h3>
+				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in between my login sessions ***<h3>
 				<h5>but sometimes I might run it manually if I'm bored</h5>
 			</div>
 			<div class="grid">
