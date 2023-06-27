@@ -9,8 +9,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	_ "os/exec"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/google/go-github/v53/github"
@@ -47,8 +47,7 @@ type PageData struct {
 }
 
 func getTrafficViews(token, owner, repo string) (int, error) {
-	timestamp := time.Now().Unix()
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/views?%d", owner, repo, timestamp)
+	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/views", owner, repo)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Authorization", fmt.Sprintf("token %s", token))
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
@@ -68,8 +67,7 @@ func getTrafficViews(token, owner, repo string) (int, error) {
 }
 
 func getTrafficClones(token, owner, repo string) (int, error) {
-	timestamp := time.Now().Unix()
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/clones?%d", owner, repo, timestamp)
+	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/clones", owner, repo)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Authorization", fmt.Sprintf("token %s", token))
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
@@ -91,8 +89,13 @@ func getTrafficClones(token, owner, repo string) (int, error) {
 func main() {
 	plsdontsteal := os.Getenv("GoEntity_Github")
 	if plsdontsteal == "" {
-		fmt.Println("Required environment variable GoEntity_Github is not set.")
-		os.Exit(1)
+		fmt.Println("token GoEntity_Github not set... attempting to read from local folder")
+		tokenBytes, err := os.ReadFile("E:/Git/Secret_Token.txt")
+		if err != nil {
+			fmt.Printf("Error reading local token file!: %v\n", err)
+			return
+		}
+		plsdontsteal = strings.TrimSpace(string(tokenBytes))
 	}
 
 	ctx := context.Background()
@@ -188,12 +191,12 @@ func main() {
 			<h4>&gt;&gt; if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
 			<br>
 			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
-			<h5 style="color:red";>Please don't steal my git token :&#41;</h5>
+			<h6>Please don't steal my git token :&#41;</h6>
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in the past <em>1</em> hour(s) ***<h3>
-				<h5>git action to update the stats is currently set up to run once every hour</h5>
+				<h3>*** shows public repo stats in the past <em>14</em> days with +/- counts in the past <em>12</em> hours ***<h3>
+				<h5>git action to update the stats is currently set up to run only twice per day</h5>
 				<h5>but sometimes I might run it manually if I'm bored</h5>
 			</div>
 			<div class="grid">
@@ -233,4 +236,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error closing index.html: %v\n", err)
 	}
+
 }

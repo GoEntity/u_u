@@ -1,42 +1,64 @@
-name: local run go
+name: goentity github
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:     #allow to run this workflow manually from git action
+
+#git token deploy permit to git page
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+#skip redundant runs
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  run-Go:
+  update:
     runs-on: ubuntu-latest
-    env:
-      GoEntity_Github: ${{ secrets.GoEntity_Github }}
     steps:
-    - name: checkout
-      uses: actions/checkout@v3
-      
-    - name: set
-      uses: actions/setup-go@v4
-      with:
-        go-version: 1.20.x
+      - name: checkout
+        uses: actions/checkout@v2
 
-    - name: dependencies
-      run: go mod download
-    
-    - name: go
-      run: go run main.go
-      env:
-        GoEntity_Github: ${{ secrets.GoEntity_Github }}
-    
-    - name: auto commit
-      run: |
-        git config --local user.name "GoEntity"
-        git config --local user.email "goentity13@gmail.com"
-        git add .
-        git commit -m "auto commit" -a || exit 0
+      - name: setupgo
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.20.x
 
-    - name: why
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GoEntity_Github }}
-        branch: main
+      - name: run go
+        env:
+          TOKEN: ${{ secrets.GoEntity_Github }}
+        run: go run main.go
+
+      - name: im sorry
+        run: |
+          git config user.name "GoEntity"
+          git config user.email "goentity13@gmail.com"
+          git add -A
+          timestamp=$(date -u)
+          git commit -m "Latest data: ${timestamp}" || exit 0
+          git push
+
+  deploy:
+    needs: update
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setpages
+        uses: actions/configure-pages@v3
+      - name: artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: '.'
+      - name: deploy
+        id: deploy
+        uses: actions/deploy-pages@v2
