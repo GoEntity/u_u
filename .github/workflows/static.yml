@@ -4,7 +4,10 @@ on:
   schedule:
     - cron: '0 0,12 * * *' #12 pm 12 am UTC
   workflow_dispatch:     #allow to run this workflow manually from git action
-
+  
+  push:
+    branches: ["main"]
+    
 #git token deploy permit to git page
 permissions:
   contents: read
