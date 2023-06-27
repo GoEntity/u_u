@@ -9,6 +9,8 @@ on:
 jobs:
   run-Go:
     runs-on: ubuntu-latest
+    env:
+      GoEntity_Github: ${{ secrets.GoEntity_Github }}
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -22,9 +24,7 @@ jobs:
       run: go mod download
     
     - name: go
-      run: |
-        echo "GoEntity_Github=${{ secrets.GoEntity_Github }}" >> $GITHUB_ENV
-        go run main.go
+      run: go run main.go
     
     - name: auto commit
       run: |
