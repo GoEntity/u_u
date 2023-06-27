@@ -237,5 +237,4 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error closing index.html: %v\n", err)
 	}
-
 }
