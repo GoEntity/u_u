@@ -59,6 +59,10 @@ p {
     margin: 10px 0;
 }
 
+#exp strong{
+    color: blueviolet;
+}
+
 strong {
     font-weight: bold;
 }
@@ -84,8 +88,4 @@ a{
 
 #exp h3, h4, h5{
     text-align: center;
-}
-
-#exp strong{
-    color: blueviolet;
 }
