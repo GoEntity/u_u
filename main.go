@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
+	_ "os/exec"
 	"sort"
 	"strings"
 	"time"
@@ -238,24 +238,5 @@ func main() {
 	err = f.Close()
 	if err != nil {
 		log.Fatalf("Error closing index.html: %v\n", err)
-	}
-
-	gitAdd := exec.Command("git", "add", ".")
-	gitCommit := exec.Command("git", "commit", "-m", "::auto commit")
-
-	err = gitAdd.Run()
-	if err != nil {
-		log.Fatalf("git add failed: %s", err)
-	}
-
-	err = gitCommit.Run()
-	if err != nil {
-		log.Printf("git commit failed: %s", err)
-	}
-
-	gitPush := exec.Command("git", "push")
-	err = gitPush.Run()
-	if err != nil {
-		log.Fatalf("git push failed: %s", err)
 	}
 }
