@@ -1,64 +1,24 @@
-name: goentity github
+name: local run go
 
 on:
-  schedule:
-    - cron: '0 * * * *'  #every hour
-  workflow_dispatch:     #allow to run this workflow manually from git action
   push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  update_and_deploy:
+  run-Go:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # fetch all history for all branches and tags
-
-      - name: setup go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.20.x'
-
-      - name: run maingo
-        env:
-          TOKEN: ${{ secrets.GoEntity_Github }}
-        run: go run main.go
-
-      - name: git status check
-        run: git status
-
-      - name: config add commit push
-        run: |
-          git config user.name "GoEntity"
-          git config user.email "goentity13@gmail.com"
-          git add -A
-          timestamp=$(date -u)
-          git commit -m "Latest data: ${timestamp}" || exit 0
-          git push
-
-      - name: setup page
-        uses: actions/configure-pages@v3
-
-      - name: upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: '.'
-
-      - name: deploy
-        id: deploy
-        uses: actions/deploy-pages@v2
+    - name: checkout
+      uses: actions/checkout@v2
+      
+    - name: set
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.20
+    
+    - name: go
+      run: |
+        echo "GoEntity_Github=${{ secrets.GoEntity_Github }}" >> $GITHUB_ENV
+        go run main.go
