@@ -1,35 +1,35 @@
 name: goentity github
-
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  #every hour
   workflow_dispatch:     #allow to run this workflow manually from git action
-
 #git token deploy permit to git page
 permissions:
   contents: read
   pages: write
   id-token: write
-
 #skip redundant runs
 concurrency:
   group: "pages"
   cancel-in-progress: false
-  
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v3
+
+      - name: setup go
       - name: Set up Gooooooo.....
         uses: actions/setup-go@v4
         with:
           go-version: 1.20.x
-      - name: run
+      - name: run .go
         env:
           TOKEN: ${{ secrets.GoEntity_Github }}
         run: go run main.go
+
+      - name: config add commit push
       - name: im sorry
         run: |
           git config user.name "GoEntity"
@@ -38,13 +38,6 @@ jobs:
           timestamp=$(date -u)
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push
-      - name: toss
-        uses: actions/upload-artifact@v2
-        with:
-          name: results
-          path: |
-            index.html
-            previous.json
   deploy:
     needs: update
     environment:
@@ -54,13 +47,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: get
-        uses: actions/download-artifact@v2
-        with:
-          name: results
-      - name: for page
+      - name: setup page
         uses: actions/configure-pages@v3
-      - name: Upload artifact
+      - name: upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: '.'
