@@ -5,13 +5,11 @@ on:
     - cron: '0 * * * *'  #every hour
   workflow_dispatch:     #allow to run this workflow manually from git action
 
-#git token deploy permit to git page
 permissions:
   contents: read
   pages: write
   id-token: write
 
-#skip redundant runs
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -20,8 +18,13 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # fetch all history for all branches and tags
+
+      - name: pull
+        run: git pull
 
       - name: setup go
         uses: actions/setup-go@v4
@@ -32,6 +35,9 @@ jobs:
         env:
           TOKEN: ${{ secrets.GoEntity_Github }}
         run: go run main.go
+
+      - name: git status check
+        run: git status
 
       - name: config add commit push
         run: |
@@ -51,6 +57,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: setup page
         uses: actions/configure-pages@v3
