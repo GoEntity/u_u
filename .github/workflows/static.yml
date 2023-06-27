@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 * * * *'  #every hour
   workflow_dispatch:     #allow to run this workflow manually from git action
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
