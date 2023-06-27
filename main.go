@@ -191,11 +191,11 @@ func main() {
 			<h4>&gt;&gt; if numbers aren't accurate, it's temporary due to 202 error, which should be automatically fixed in a few minutes</h4>
 			<br>
 			<h5>Updated on {{.Date}} via repo <a href="https://github.com/GoEntity/GoEntity_Github">GoEntity_Github</a></h5>
-			<h5 style="color:red";>Please don't steal my git token :&#41;</h5>
+			<h5 style="color:red;">Please don't steal my git token :&#41;</h5>
 		</header>
 		<main>
 			<div id="exp">
-				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in between my login sessions ***<h3>
+				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in between my login sessions ***</h3>
 				<h5>but sometimes I might run it manually if I'm bored</h5> <br>
 				<h5><strong>"+"</strong> calculation is done by <strong>"increase during login session"</strong> - <strong>"decrease due to Github removing 14-day-old counts"</strong></h5>
 			</div>
