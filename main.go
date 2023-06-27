@@ -196,18 +196,19 @@ func main() {
 		<main>
 			<div id="exp">
 				<h3>*** shows public repo stats in the past <em>14</em> days with +/- count updates in between my login sessions ***<h3>
-				<h5>but sometimes I might run it manually if I'm bored</h5>
+				<h5>but sometimes I might run it manually if I'm bored</h5> <br>
+				<h5><strong>"+"</strong> calculation is done by <strong>"increase during login session"</strong> - <strong>"decrease due to Github removing 14-day-old counts"</strong></h5>
 			</div>
 			<div class="grid">
 				{{range .RepoData}}
 				<article>
 					<h2><a href="{{.URL}}">{{.Name}}</a></h2>
 					<p>{{.Description}}</p>
-					<p><strong>Stars:</strong> {{.Stars}} <span>(change: {{if gt .StarsIncrease 0}}+{{end}}{{.StarsIncrease}})</span></p>
-					<p><strong>Forks:</strong> {{.Forks}} <span>(change: {{if gt .ForksIncrease 0}}+{{end}}{{.ForksIncrease}})</span></p>
-					<p><strong>Commits:</strong> {{.Commits}} <span>(change: {{if gt .CommitsIncrease 0}}+{{end}}{{.CommitsIncrease}})</span></p>
-					<p><strong>Views:</strong> {{.Views}} <span>(change: {{if gt .ViewsIncrease 0}}+{{end}}{{.ViewsIncrease}})</span></p>
-					<p><strong>Clones:</strong> {{.Clones}} <span>(change: {{if gt .ClonesIncrease 0}}+{{end}}{{.ClonesIncrease}})</span></p>
+					<p><strong>Stars:</strong> {{.Stars}} <span>( {{if gt .StarsIncrease 0}}+{{end}}{{.StarsIncrease}} )</span></p>
+					<p><strong>Forks:</strong> {{.Forks}} <span>( {{if gt .ForksIncrease 0}}+{{end}}{{.ForksIncrease}} )</span></p>
+					<p><strong>Commits:</strong> {{.Commits}} <span>( {{if gt .CommitsIncrease 0}}+{{end}}{{.CommitsIncrease}} )</span></p>
+					<p><strong>Views:</strong> {{.Views}} <span>( {{if gt .ViewsIncrease 0}}+{{end}}{{.ViewsIncrease}} )</span></p>
+					<p><strong>Clones:</strong> {{.Clones}} <span>( {{if gt .ClonesIncrease 0}}+{{end}}{{.ClonesIncrease}} )</span></p>
 				</article>
 				{{end}}
 			</div>
