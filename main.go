@@ -11,7 +11,6 @@ import (
 	"os"
 	_ "os/exec"
 	"sort"
-	"strings"
 	"time"
 
 	"github.com/google/go-github/v53/github"
@@ -92,13 +91,8 @@ func getTrafficClones(token, owner, repo string) (int, error) {
 func main() {
 	plsdontsteal := os.Getenv("GoEntity_Github")
 	if plsdontsteal == "" {
-		fmt.Println("token GoEntity_Github not set... attempting to read from local folder")
-		tokenBytes, err := os.ReadFile("E:/Git/Secret_Token.txt")
-		if err != nil {
-			fmt.Printf("Error reading local token file!: %v\n", err)
-			return
-		}
-		plsdontsteal = strings.TrimSpace(string(tokenBytes))
+		fmt.Println("Required environment variable GoEntity_Github is not set.")
+		os.Exit(1)
 	}
 
 	ctx := context.Background()
