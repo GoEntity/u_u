@@ -47,7 +47,8 @@ type PageData struct {
 }
 
 func getTrafficViews(token, owner, repo string) (int, error) {
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/views", owner, repo)
+	timestamp := time.Now().Unix()
+	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/views?%d", owner, repo, timestamp)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Authorization", fmt.Sprintf("token %s", token))
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
@@ -67,7 +68,8 @@ func getTrafficViews(token, owner, repo string) (int, error) {
 }
 
 func getTrafficClones(token, owner, repo string) (int, error) {
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/clones", owner, repo)
+	timestamp := time.Now().Unix()
+	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/traffic/clones?%d", owner, repo, timestamp)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Authorization", fmt.Sprintf("token %s", token))
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
