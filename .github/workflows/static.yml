@@ -10,21 +10,23 @@ permissions:
   contents: read
   pages: write
   id-token: write
+
 #skip redundant runs
 concurrency:
   group: "pages"
   cancel-in-progress: false
+  
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: checkout
         uses: actions/checkout@v3
       - name: Set up Gooooooo.....
         uses: actions/setup-go@v4
         with:
           go-version: 1.20.x
-      - name: Run script
+      - name: run
         env:
           TOKEN: ${{ secrets.GoEntity_Github }}
         run: go run main.go
@@ -36,6 +38,13 @@ jobs:
           timestamp=$(date -u)
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push
+      - name: toss
+        uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: |
+            index.html
+            previous.json
   deploy:
     needs: update
     environment:
@@ -43,14 +52,18 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v3
-      - name: Setup Pages
+      - name: get
+        uses: actions/download-artifact@v2
+        with:
+          name: results
+      - name: for page
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: '.'
-      - name: Deploy to GitHub Pages
+      - name: deploy
         id: deploy
         uses: actions/deploy-pages@v2
