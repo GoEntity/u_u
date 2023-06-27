@@ -33,7 +33,7 @@ jobs:
         git add .
         git commit -m "auto commit" -a || exit 0
 
-    - name: Push changes
+    - name: why
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GoEntity_Github }}
