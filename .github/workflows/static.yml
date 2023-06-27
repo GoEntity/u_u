@@ -25,6 +25,8 @@ jobs:
     
     - name: go
       run: go run main.go
+      env:
+        GoEntity_Github: ${{ secrets.GoEntity_Github }}
     
     - name: auto commit
       run: |
@@ -37,4 +39,4 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GoEntity_Github }}
-        
+        branch: main
