@@ -203,11 +203,11 @@ func main() {
 				<article>
 					<h2><a href="{{.URL}}">{{.Name}}</a></h2>
 					<p>{{.Description}}</p>
-					<p><strong>Stars:</strong> {{.Stars}} <span>(+{{.StarsIncrease}})</span></p>
-					<p><strong>Forks:</strong> {{.Forks}} <span>(+{{.ForksIncrease}})</span></p>
-					<p><strong>Commits:</strong> {{.Commits}} <span>(+{{.CommitsIncrease}})</span></p>
-					<p><strong>Views:</strong> {{.Views}} <span>(+{{.ViewsIncrease}})</span></p>
-					<p><strong>Clones:</strong> {{.Clones}} <span>(+{{.ClonesIncrease}})</span></p>
+					<p><strong>Stars:</strong> {{.Stars}} <span>(change: {{if gt .StarsIncrease 0}}+{{end}}{{.StarsIncrease}})</span></p>
+					<p><strong>Forks:</strong> {{.Forks}} <span>(change: {{if gt .ForksIncrease 0}}+{{end}}{{.ForksIncrease}})</span></p>
+					<p><strong>Commits:</strong> {{.Commits}} <span>(change: {{if gt .CommitsIncrease 0}}+{{end}}{{.CommitsIncrease}})</span></p>
+					<p><strong>Views:</strong> {{.Views}} <span>(change: {{if gt .ViewsIncrease 0}}+{{end}}{{.ViewsIncrease}})</span></p>
+					<p><strong>Clones:</strong> {{.Clones}} <span>(change: {{if gt .ClonesIncrease 0}}+{{end}}{{.ClonesIncrease}})</span></p>
 				</article>
 				{{end}}
 			</div>
