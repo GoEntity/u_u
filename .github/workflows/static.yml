@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update:
+  update_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -41,16 +41,3 @@ jobs:
           timestamp=$(date -u)
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push origin main
-
-  deploy:
-    needs: update
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Deploy to GitHub Pages
-        id: deploy
-        uses: actions/deploy-pages@v2
