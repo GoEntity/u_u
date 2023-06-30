@@ -87,12 +87,12 @@ func getTrafficClones(token, owner, repo string) (int, error) {
 }
 
 func main() {
-	plsdontsteal := os.Getenv("GoEntity_Github")
+	plsdontsteal := os.Getenv("PLSDONTSTEALMYTOKENPLSEDONTSTEALMYTOKEN")
 	if plsdontsteal == "" {
-		fmt.Println("token GoEntity_Github not set... attempting to read from local folder")
+		fmt.Println("token not set... attempting to read from local folder")
 		tokenBytes, err := os.ReadFile("E:/Git/Secret_Token.txt")
 		if err != nil {
-			fmt.Printf("Error reading local token file!: %v\n", err)
+			fmt.Printf("error reading local token! where'd u put it: %v\n", err)
 			return
 		}
 		plsdontsteal = strings.TrimSpace(string(tokenBytes))
@@ -171,7 +171,7 @@ func main() {
 		newDataBytes, _ := json.Marshal(PreviousData{RepoStats: blogData})
 		os.WriteFile("previous.json", newDataBytes, 0644)
 	} else {
-		fmt.Println("No valid data fetched, not updating previous.json")
+		fmt.Println("no valid data fetched")
 	}
 
 	const tmpl = `
@@ -218,11 +218,11 @@ func main() {
 
 	tmplParsed, err := template.New("webpage").Parse(tmpl)
 	if err != nil {
-		log.Fatalf("Error parsing template: %v\n", err)
+		log.Fatalf("error parsing template: %v\n", err)
 	}
 	f, err := os.Create("index.html")
 	if err != nil {
-		log.Fatalf("Error creating index.html: %v\n", err)
+		log.Fatalf("error creating index.html: %v\n", err)
 	}
 	data := &PageData{
 		Date:     time.Now().Format("01-02-2006"),
@@ -230,11 +230,11 @@ func main() {
 	}
 	err = tmplParsed.Execute(f, data)
 	if err != nil {
-		log.Fatalf("Error executing template: %v\n", err)
+		log.Fatalf("error executing template: %v\n", err)
 	}
 	err = f.Close()
 	if err != nil {
-		log.Fatalf("Error closing index.html: %v\n", err)
+		log.Fatalf("error closing index.html: %v\n", err)
 	}
 
 }
