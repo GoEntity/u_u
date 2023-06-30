@@ -1,4 +1,4 @@
-module github.com/GoEntity/GoEntity_Github
+module github.com/GoEntity/u_u
 
 go 1.20
 
